@@ -53,5 +53,4 @@ const Content = ({part}) => {
   }
 
 
-
 export default App
