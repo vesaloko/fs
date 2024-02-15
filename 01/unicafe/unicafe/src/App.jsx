@@ -3,11 +3,10 @@ import { useState } from 'react'
 const App = () => {
 const feedback = 'give feedback'
 const stats = 'statistics'
-  // tallenna napit omaan tilaansa
 
   const [rate, setRate] = useState({
     good: 0, neutral: 0, bad:0, all:0, pos:0, avg:0})
-
+   
 const handleGoodRate = () => {
   setRate({...rate, good: rate.good+1, all: rate.all +1, avg:rate.avg+1})
 }
@@ -15,7 +14,6 @@ const handleGoodRate = () => {
 const handleBadRate = () => {
   setRate({...rate, bad: rate.bad+1, all: rate.all +1, avg: rate.avg-1})
 }
-
 
 const handleNeutralRate = () => {
   setRate({...rate, neutral: rate.neutral+1, all: rate.all +1})
@@ -28,12 +26,17 @@ const handleNeutralRate = () => {
         <Button handleClick={handleBadRate} text='bad' />
         <Button handleClick={handleNeutralRate} text='neutral' />
       <Header feedback={stats}/>
-        <Statistics text ='good  ' rate={rate.good}/>
-       <Statistics text ='neutral ' rate={rate.neutral}/>
-       <Statistics text ='bad ' rate={rate.bad}/>
-       <Statistics text ='all ' rate={rate.all}/>
-       <Statistics text ='average  ' rate={rate.avg/rate.all}/>
-       <Statistics text ='positive ' rate={rate.good/rate.all * 100} unit =' %'/>
+      <History allClicks={rate.all} />
+      {rate.all > 0 && (
+        <>
+          <Statistics text ='good  ' rate={rate.good}/>
+          <Statistics text ='neutral ' rate={rate.neutral}/>
+          <Statistics text ='bad ' rate={rate.bad}/>
+          <Statistics text ='all ' rate={rate.all}/>
+          <Statistics text ='average  ' rate={rate.avg / rate.all}/>
+          <Statistics text ='positive ' rate={(rate.good / rate.all) * 100} unit =' %'/>
+        </>
+      )}
     </div>
   )
 }
@@ -57,5 +60,16 @@ const Header = ({feedback}) => {
       <h1>{feedback}</h1>
   )
   }
-  
+
+  const History = ({allClicks }) => {
+    if (allClicks === 0) {
+      return (
+        <div>
+          press the buttons to see the statistics
+        </div>
+      );
+    }
+  };
+
+
 export default App
