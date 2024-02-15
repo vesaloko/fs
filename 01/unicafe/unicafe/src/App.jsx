@@ -28,13 +28,12 @@ const handleNeutralRate = () => {
         <Button handleClick={handleBadRate} text='bad' />
         <Button handleClick={handleNeutralRate} text='neutral' />
       <Header feedback={stats}/>
-     <p>good {rate.good}</p> 
-       <p>neutral {rate.neutral}</p>
-       <p>bad {rate.bad}</p>
-       <p>all {rate.all}</p> 
-      <p>average {rate.avg/rate.all} </p>
-      <p>positive {rate.good/rate.all * 100} %</p>
-    
+        <Statistics text ='good  ' rate={rate.good}/>
+       <Statistics text ='neutral ' rate={rate.neutral}/>
+       <Statistics text ='bad ' rate={rate.bad}/>
+       <Statistics text ='all ' rate={rate.all}/>
+       <Statistics text ='average  ' rate={rate.avg/rate.all}/>
+       <Statistics text ='positive ' rate={rate.good/rate.all * 100} unit =' %'/>
     </div>
   )
 }
@@ -44,9 +43,19 @@ const Button = ({ handleClick, text }) => (
     {text}
   </button>
 )
+
+const Statistics = ({text, rate, unit}) => (
+  <p>
+    {text}
+    {rate}
+    {unit}
+  </p>
+)
+
 const Header = ({feedback}) => {
   return (
       <h1>{feedback}</h1>
   )
   }
+  
 export default App
