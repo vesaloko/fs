@@ -1,4 +1,5 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import axios from 'axios'
 import Person from './components/Person.jsx'
 import NameForm from './components/NameForm.jsx'
 
@@ -13,6 +14,7 @@ const App = () => {
   const [newNumber, setNewNumber] = useState('a new number')
   const [showAll, setShowAll] = useState(true)
   const [filterN,setFilter] = useState('')
+  const [ihmiset, setIhmiset] = useState([])
 
 
   const addName = (event) => {
@@ -33,6 +35,7 @@ else {
     important: Math.random() > .7,
     id: persons.length + 1,
   }
+
 
   setPersons(persons.concat(personObject))
   setNewName('')
@@ -57,8 +60,17 @@ else {
       person.name.toLowerCase().includes(filterN.toLowerCase())
     );
 
-    const namesToShow = filteredPersons.length > 0 ? filteredPersons : persons;
 
+    const namesToShow = filteredPersons.length > 0 ? filteredPersons : persons;
+    
+    
+    useEffect(() => {
+      axios
+        .get('http://localhost:3001/persons')
+        .then(response => {
+          setIhmiset(response.data)
+        })
+    }, [])
 
   return (
     <div>
@@ -84,9 +96,11 @@ else {
   )
 }
 
+
 const nameUsed = (persons, name) => {
   return persons.filter(person => person.name === name).length > 0
 }
+
 
 const numberUsed = (persons, number) => {
   return persons.filter(person => person.number === number).length > 6
