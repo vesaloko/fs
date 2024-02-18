@@ -1,56 +1,61 @@
+import Course from './components/Course'
+
 
 const App = () => {
-  const course = {
-    name: 'Half Stack application development',
-    part: [
-      {
-        name: 'Fundamentals of React',
-        exercises: 10
-      },
-      {
-        name: 'Using props to pass data',
-        exercises: 7
-      },
-      {
-        name: 'State of a component',
-        exercises: 14
-      }
-    ]
-  }
-
-
-  return (
-    <div>
-       <Header course={course.name}/>
-       <Content part = {course.part}/>
-      <Total total ={course.part[0].exercises + course.part[1].exercises + course.part[2].exercises} />
-    </div>
-  )
-}
-
-const Content = ({part}) => {
-  return (
-    <div>
-       {part.map((part, index) => (
-        <p key={index}>{part.name} - {part.exercises} exercises</p>
-      ))}
-    </div>
-  )
-}
-
-  const Header = ({course}) => {
-    return (
-        <h1>{course}</h1>
-    )
+  const courses = [
+    {
+      name: 'Half Stack application development',
+      id: 1,
+      parts: [
+        {
+          name: 'Fundamentals of React',
+          exercises: 10,
+          id: 1
+        },
+        {
+          name: 'Using props to pass data',
+          exercises: 7,
+          id: 2
+        },
+        {
+          name: 'State of a component',
+          exercises: 14,
+          id: 3
+        },
+        {
+          name: 'Redux',
+          exercises: 11,
+          id: 4
+        }
+      ]
+    }, 
+    {
+      name: 'Node.js',
+      id: 2,
+      parts: [
+        {
+          name: 'Routing',
+          exercises: 3,
+          id: 1
+        },
+        {
+          name: 'Middlewares',
+          exercises: 7,
+          id: 2
+        }
+      ]
     }
+  ]
 
+  const courseData = courses.map(course =>
+    <Course key={course.id} course={course} /> 
+  )
 
-    const Total = ({total}) => {
-      return (
-
-       <p>Total number of exercises {total}</p>
-       )
-  }
-
-
+  console.log(courseData)
+  return (
+    <div>
+       {courseData}
+    </div>
+  )
+}
 export default App
